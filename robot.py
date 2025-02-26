@@ -172,7 +172,8 @@ class Robot(Job):
                     self.config.reload()
                     self.LOG.info("已更新")
             else:
-                self.toChitchat(msg)  # 闲聊
+                if msg.roomid not in self.config.PERSONS: 
+                    self.toChitchat(msg)  # 闲聊
 
     def onMsg(self, msg: WxMsg) -> int:
         try:
@@ -223,11 +224,11 @@ class Robot(Job):
         if at_list:
             if at_list == "notify@all":  # @所有人
                 ats = " @所有人"
-            else:
-                wxids = at_list.split(",")
-                for wxid in wxids:
-                    # 根据 wxid 查找群昵称
-                    ats += f" @{self.wcf.get_alias_in_chatroom(wxid, receiver)}"
+            # else:
+            #     wxids = at_list.split(",")
+            #     for wxid in wxids:
+            #         # 根据 wxid 查找群昵称
+            #         ats += f" @{self.wcf.get_alias_in_chatroom(wxid, receiver)}"
 
         # {msg}{ats} 表示要发送的消息内容后面紧跟@，例如 北京天气情况为：xxx @张三
         if ats == "":
