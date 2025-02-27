@@ -172,7 +172,7 @@ class Robot(Job):
                     self.config.reload()
                     self.LOG.info("已更新")
             else:
-                if msg.roomid not in self.config.PERSONS: 
+                if msg.sender in self.config.PERSONS:
                     self.toChitchat(msg)  # 闲聊
 
     def onMsg(self, msg: WxMsg) -> int:
